@@ -22,7 +22,6 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     role = db.Column(db.String(20), default='student')
     with app.app_context():
-        db.create_all()
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -55,7 +54,40 @@ class Feedback(db.Model):
     feedback_time = db.Column(db.DateTime, default=datetime.utcnow)
     __table_args__ = (db.UniqueConstraint('event_id', 'user_id', name='_user_feedback_uc'),)
     with app.app_context():
-        db.create_all
+        db.create_all()
+
+    print("=== CHECKING USERS ===")
+
+    users = User.query.all()
+
+    for user in users:
+        print(f"Username: {user.username}, Role: {user.role}")
+
+    print("=====================")
+    
+    # Create default organizer
+    organizer = User.query.filter_by(username='cs_club').first()
+
+    if not organizer:
+        organizer = User(
+            username='cs_club',
+            password='clubpassword',
+            role='organizer'
+        )
+        db.session.add(organizer)
+
+    # Create default admin
+    admin = User.query.filter_by(username='admin_hitam').first()
+
+    if not admin:
+        admin = User(
+            username='admin_hitam',
+            password='adminpassword',
+            role='admin'
+        )
+        db.session.add(admin)
+
+    db.session.commit()
 
 # --- Utility Functions ---
 
