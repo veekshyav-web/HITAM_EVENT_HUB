@@ -1,3 +1,4 @@
+import os 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -9,7 +10,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_super_secret_key_for_hitam' 
 # app.py (Replace the line)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' # Use the local SQLite file directly
+import os 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
