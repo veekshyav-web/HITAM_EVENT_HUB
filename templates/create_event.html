@@ -1,0 +1,66 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3>Create New Event</h3>
+        </div>
+
+        <div class="card-body">
+            <form method="POST">
+
+                <div class="mb-3">
+                    <label class="form-label">Event Title</label>
+                    <input type="text" name="title" class="form-control"
+                           placeholder="Enter event title" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Event Description</label>
+                    <textarea name="description" class="form-control"
+                              rows="4" placeholder="Describe your event"
+                              required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Start Date and Time</label>
+                    <input type="datetime-local" name="start_datetime"
+                           class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">End Date and Time</label>
+                    <input type="datetime-local" name="end_datetime"
+                           class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Venue</label>
+                    <select name="venue_id" class="form-select" required>
+                        <option value="">Select Venue</option>
+
+                        {% for venue in venues %}
+                        <option value="{{ venue.id }}">
+                            {{ venue.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Submit Event for Approval
+                </button>
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
