@@ -81,6 +81,23 @@ with app.app_context():
 
     print("Default accounts initialized!")
 
+    if Venue.query.count() == 0:
+        venues = [
+            Venue(name="Auditorium", capacity=500),
+            Venue(name="Convention Hall", capacity=1500),
+            Venue(name="Main Block", capacity=1000),
+            Venue(name="Basketball Court", capacity=100),
+            Venue(name="Conference Room", capacity=50),
+            Venue(name="Amphitheatre", capacity=300)
+        ]
+
+        db.session.add_all(venues)
+        db.session.commit()
+
+    print("Available venues:")
+    for venue in Venue.query.all():
+        print(venue.name)
+
     print("=== CHECKING USERS ===")
 
     users = User.query.all()
