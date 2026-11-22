@@ -33,15 +33,11 @@ class Event(db.Model):
     venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'))
     organizer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     status = db.Column(db.String(20), default='pending')
-    with app.app_context():
-        db.create_all()
 
 class Venue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
     capacity = db.Column(db.Integer, default=0)
-    with app.app_context():
-        db.create_all()
 
 class EventRegistration(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -49,9 +45,7 @@ class EventRegistration(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     registration_time = db.Column(db.DateTime, default=datetime.utcnow)
     __table_args__ = (db.UniqueConstraint('event_id', 'user_id', name='_user_event_uc'),)
-    with app.app_context():
-        db.create_all()
-
+   
 class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
@@ -61,8 +55,7 @@ class Feedback(db.Model):
     feedback_time = db.Column(db.DateTime, default=datetime.utcnow)
     __table_args__ = (db.UniqueConstraint('event_id', 'user_id', name='_user_feedback_uc'),)
     with app.app_context():
-        db.create_all()
-
+        db.create_all
 
 # --- Utility Functions ---
 
